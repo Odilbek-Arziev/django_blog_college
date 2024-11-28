@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 body {
   height: 100vh;
@@ -19,18 +19,21 @@ body {
 }
 .navbar-start {
   width: 5%;
+  cursor: pointer;
 }
 .navbar-start img {
   width: 100%;
 }
-.button {
+.navbar .button {
   padding: 10px 20px;
   border: 1px solid lightgrey;
   background: white;
   border-radius: 5px;
   cursor: pointer;
+  color: black;
+  text-decoration: none;
 }
-.button:active {
+.navbar .button:active {
   box-shadow: 0 0 5px 1px lightgrey;
 }
 main {
@@ -41,6 +44,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: center;
   gap: 20px;
   flex-wrap: wrap;
 }
@@ -62,11 +66,36 @@ main {
 .post:hover {
   transform: scale(1.05);
 }
-.title {
+.container .title {
   font-weight: bold;
   font-size: 2rem;
 }
 .author,
 .date {
   color: grey;
+}
+
+.post-container {
+  width: 80%;
+  margin: auto;
+  padding-top: 30px;
+}
+.post-container .title {
+  font-size: 50px;
+  font-weight: bold;
+}
+.post-container .info {
+  color: grey;
+  font-style: italic;
+}
+.post-container .image {
+  width: 100%;
+  margin: 20px 0;
+}
+.post-container .image img {
+  width: 100%;
+}
+.post-container .post-body {
+  font-size: 20px;
+  line-height: 1.5;
 }

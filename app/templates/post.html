@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>{{post.title}}</h1>
-    <img src="{{post.image.url}}" alt="">
-</body>
-</html>
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="post-container">
+  <div class="title">{{ post.title }}</div>
+  <div class="info">{{post.date_added}} by {{post.author}}</div>
+
+  <!-- добавить категорию -->
+
+  <div class="image">
+    <img src="{{ post.image.url }}" alt="" />
+  </div>
+  <div class="post-body">{{ post.body }}</div>
+</div>
+{% endblock %}
