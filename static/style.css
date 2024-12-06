@@ -134,3 +134,46 @@ form {
   border-radius: 3px;
   cursor: pointer;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.buttons .button {
+  border: 1px solid lightgrey;
+  padding: 5px 15px;
+  font-size: 25px;
+  border-radius: 5px;
+  transition: 0.5s;
+  cursor: pointer;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+.primary {
+  background: rgb(26, 191, 26);
+  color: white;
+}
+.danger {
+  background: red !important;
+  color: white;
+}
+.buttons .button:active {
+  box-shadow: 0 0 5px 1px lightgrey;
+}
+.danger:hover {
+  background: darkred;
+}
+.primary:hover {
+  background: darkgreen;
+}
+
+form .title {
+  font-size: 25px;
+}

@@ -21,8 +21,18 @@ def post_create(request):
 
         if form.is_valid():
             form.save()
-            return redirect('app:home')
+            return redirect("app:home")
     else:
         form = PostForm()
 
     return render(request, "post_create.html", {"form": form})
+
+
+def post_delete(request, pk):
+    post = Post.objects.get(pk=pk)
+
+    if request.method == "POST":
+        post.delete()
+        return redirect("app:home")
+
+    return render(request, "post_delete.html", {"post": post})
