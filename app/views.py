@@ -36,3 +36,16 @@ def post_delete(request, pk):
         return redirect("app:home")
 
     return render(request, "post_delete.html", {"post": post})
+
+
+def post_edit(request, pk):
+    post = Post.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        form.save()
+        return redirect('app:post_detail', pk=post.pk)
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, 'post_edit.html', {'form': form})

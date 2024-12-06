@@ -1,4 +1,6 @@
-{% extends 'base_layout.html' %} {% block content %}
+{% extends 'base_layout.html' %} 
+
+{% block content %}
 <div class="post-container">
   <div class="header">
     <div>
@@ -7,7 +9,7 @@
     </div>
 
     <div class="buttons">
-      <a class="button primary" href="">
+      <a class="button primary" href="{% url 'app:post_edit' post.pk %}">
         <ion-icon name="create-outline"></ion-icon>
       </a>
       <a class="button danger" href="{% url 'app:post_delete' post.pk %}">
