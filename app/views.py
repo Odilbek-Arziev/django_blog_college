@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Post
 from django.http import HttpResponse
 from .forms import PostForm
@@ -15,5 +15,14 @@ def post_detail(request, pk):
 
 
 def post_create(request):
-    form = PostForm()
-    return render(request, "post_create.html", {'form': form})
+    if request.method == "POST":
+
+        form = PostForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('app:home')
+    else:
+        form = PostForm()
+
+    return render(request, "post_create.html", {"form": form})
