@@ -183,3 +183,35 @@ form {
 form .title {
   font-size: 25px;
 }
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-container .image {
+  width: 40vw;
+}
+.flex-container .image img {
+  width: 100%;
+}
+.flex-container .text {
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.flex-container .text .title {
+  font-size: 30px;
+}
+.flex-container .button {
+  background: rgb(26, 191, 26);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 20px;
+  text-align: center;
+}

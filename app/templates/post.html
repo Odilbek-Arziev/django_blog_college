@@ -8,6 +8,7 @@
       <div class="info">{{post.date_added}} by {{post.author}}</div>
     </div>
 
+    {% if user == post.author %}
     <div class="buttons">
       <a class="button primary" href="{% url 'app:post_edit' post.pk %}">
         <ion-icon name="create-outline"></ion-icon>
@@ -16,6 +17,7 @@
         <ion-icon name="trash-outline"></ion-icon>
       </a>
     </div>
+    {% endif %}
   </div>
 
   <div class="image">
