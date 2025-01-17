@@ -1,6 +1,4 @@
-{% extends 'base_layout.html' %} 
-
-{% block content %}
+{% extends 'base_layout.html' %} {% block content %}
 <div class="post-container">
   <div class="header">
     <div>
@@ -24,5 +22,57 @@
     <img src="{{ post.image.url }}" alt="" />
   </div>
   <div class="post-body">{{ post.body }}</div>
+  <hr />
+  <div class="post-buttons">
+    <a
+      href="{% url 'app:post_like' post.pk %}"
+      class="post-button {% if user in post.likes.all %} primary {% endif %}"
+    >
+      <ion-icon name="thumbs-up-outline"></ion-icon>
+      <span> {{ post.likes.count }}</span>
+    </a>
+    <a
+      href="{% url 'app:post_dislike' post.pk %}"
+      class="post-button {% if user in post.dislikes.all %} danger {% endif %}"
+    >
+      <ion-icon name="thumbs-down-outline"></ion-icon>
+      <span> {{ post.dislikes.count }}</span>
+    </a>
+  </div>
+  <hr />
+  <div class="comments">
+    <div class="title">Комментарии</div>
+
+    <form action="" class="comment-form">
+      <input type="text" class="input" placeholder="Введите ваш комментарий" />
+    </form>
+
+    <div class="comments-container">
+      <div class="comment">
+        <div class="comment-head">
+          <div class="avatar">
+            <img
+              src="https://static-00.iconduck.com/assets.00/avatar-default-icon-2048x2048-h6w375ur.png"
+              alt=""
+            />
+          </div>
+          <div class="author-name">Admin</div>
+          <div class="date">17.01.2025</div>
+        </div>
+        <div class="comment-body">Lorem, ipsum dolor.</div>
+        <div class="comment-footer">
+          <a class="comment-button">
+            <ion-icon name="thumbs-up-outline"></ion-icon>
+          </a>
+          <a class="comment-button">
+            <ion-icon name="thumbs-down-outline"></ion-icon>
+          </a>
+          <a class="comment-button">
+            <ion-icon name="arrow-undo-outline"></ion-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

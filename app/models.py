@@ -10,6 +10,9 @@ class Post(models.Model):
     )
     date_added = models.DateField(auto_now_add=True)
     image = models.ImageField(default="default.png", blank=True)
+    likes = models.ManyToManyField(User, related_name="likes")
+    dislikes = models.ManyToManyField(User, related_name="dislikes")
+
 
     def __str__(self):
         return self.title
