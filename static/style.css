@@ -167,7 +167,7 @@ form {
   color: white;
 }
 .danger {
-  background: red !important;
+  background: red ;
   color: white;
 }
 .buttons .button:active {
@@ -245,4 +245,65 @@ form .title {
   border: 1px solid lightgrey;
   padding: 0 10px;
   border-radius: 5px;
+}
+.comments-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
+}
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 1px lightgrey;
+  width: 30vw;
+}
+.comment-head,
+.comment-author {
+  display: flex;
+  gap: 10px;
+}
+.comment-head .avatar {
+  width: 50px;
+}
+.comment-head img {
+  width: 100%;
+}
+
+.comment-button {
+  border: 1px solid lightgrey;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+.comment-footer {
+  display: flex;
+  gap: 10px;
+}
+
+.comment-control {
+  display: flex;
+  gap: 10px;
+}
+.comment-control .btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+.comment-head {
+  justify-content: space-between;
 }

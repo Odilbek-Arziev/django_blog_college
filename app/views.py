@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Post
 from django.http import HttpResponse
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -12,7 +12,19 @@ def home(request):
 
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
-    return render(request, "post.html", {"post": post})
+    form = CommentForm(request.POST or None)
+
+    if form.is_valid():
+        if request.user.is_anonymous:
+            return redirect("users:login")
+
+        instance = form.save(commit=False)
+        instance.post = post
+        instance.author = request.user
+        instance.save()
+        return redirect("app:post_detail", pk=post.pk)
+
+    return render(request, "post.html", {"post": post, "form": form})
 
 
 @login_required(login_url="users:login")

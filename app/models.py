@@ -19,3 +19,13 @@ class Post(models.Model):
 
     def snippet(self):
         return self.body[:20].strip()
+
+class Comment(models.Model):
+    body = models.TextField()
+    date_added = models.DateField(auto_now_add=True)
+    is_edited = models.BooleanField(default=False)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.body
