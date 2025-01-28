@@ -118,6 +118,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 30vw;
 }
 .field input[type="text"],
 .field input[type="password"],
@@ -167,14 +168,14 @@ form {
   color: white;
 }
 .danger {
-  background: red ;
+  background: red !important;
   color: white;
 }
 .buttons .button:active {
   box-shadow: 0 0 5px 1px lightgrey;
 }
 .danger:hover {
-  background: darkred;
+  background: darkred !important;
 }
 .primary:hover {
   background: darkgreen;
@@ -235,10 +236,12 @@ form .title {
   box-shadow: none;
   background: none;
   padding: 10px;
+  width: 100%;
 }
 .comments .title {
   font-size: 25px;
   text-align: center;
+  padding: 30px 0;
 }
 .comment-form input {
   height: 5vh;
@@ -306,4 +309,10 @@ form .title {
 }
 .comment-head {
   justify-content: space-between;
+}
+.is-edited {
+  color: lightgrey;
+  text-align: right;
+  font-size: 12px;
+  font-style: italic;
 }

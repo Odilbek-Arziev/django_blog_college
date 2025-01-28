@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Post
+from .models import Post, Comment
 from django.http import HttpResponse
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
@@ -110,3 +110,64 @@ def post_dislike(request, pk):
         post_data.dislikes.remove(user)
 
     return redirect("app:post_detail", pk=post_data.pk)
+
+
+def comment_edit(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    form = CommentForm(request.POST or None, instance=comment)
+
+    if comment.author != request.user:
+        return redirect("app:forbidden")
+
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.is_edited = True
+        instance.save()
+
+        return redirect("app:post_detail", pk=comment.post.pk)
+
+    # post_edit.html отлично подойдет в качестве шаблонизатора редактирования
+    return render(request, "post_edit.html", {"form": form})
+
+
+def comment_delete(request, pk):
+    comment = Comment.objects.get(pk=pk)
+
+    if comment.author != request.user:
+        return redirect("app:forbidden")
+
+    if request.method == "POST":
+        comment.delete()
+        return redirect("app:post_detail", pk=comment.post.pk)
+
+    return render(request, "comment_delete.html", {"comment": comment})
+
+
+@login_required(login_url="users:login")
+def comment_like(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    user = request.user
+    likes = comment.likes
+
+    if user not in likes.all():
+        likes.add(user)
+        comment.dislikes.remove(user)
+    elif user in likes.all():
+        likes.remove(user)
+
+    return redirect("app:post_detail", pk=comment.post.pk)
+
+
+@login_required(login_url="users:login")
+def comment_dislike(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    user = request.user
+    dislikes = comment.dislikes
+
+    if user not in dislikes.all():
+        dislikes.add(user)
+        comment.likes.remove(user)
+    elif user in dislikes.all():
+        dislikes.remove(user)
+
+    return redirect("app:post_detail", pk=comment.post.pk)

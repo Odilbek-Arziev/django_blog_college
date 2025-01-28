@@ -66,11 +66,17 @@
             <div class="date">{{ comment.date_added }}</div>
           </div>
           <div class="comment-control">
-            {% if user == comment.author %}
-            <a class="btn primary">
+            {% if user == comment.author or user.is_superuser %}
+            <a
+              class="btn primary"
+              href="{% url 'app:comment_edit' comment.pk %}"
+            >
               <ion-icon name="create"></ion-icon>
             </a>
-            <a class="btn danger">
+            <a
+              class="btn danger"
+              href="{% url 'app:comment_delete' comment.pk %}"
+            >
               <ion-icon name="trash"></ion-icon>
             </a>
             {% endif %}
@@ -78,15 +84,30 @@
         </div>
         <div class="comment-body">{{ comment.body }}</div>
         <div class="comment-footer">
-          <a class="comment-button">
-            <ion-icon name="thumbs-up-outline"></ion-icon>
-          </a>
-          <a class="comment-button">
-            <ion-icon name="thumbs-down-outline"></ion-icon>
-          </a>
+          <div class="buttons">
+            <a
+              href="{% url 'app:comment_like' comment.pk %}"
+              class="comment-button {% if user in comment.likes.all %} primary {% endif %}"
+            >
+              <ion-icon name="thumbs-up-outline"></ion-icon>
+              {{comment.likes.count}}
+            </a>
+            <a
+              href="{% url 'app:comment_dislike' comment.pk %}"
+              class="comment-button {% if user in comment.dislikes.all %} danger {% endif %}"
+            >
+              <ion-icon name="thumbs-down-outline"></ion-icon>
+              {{comment.likes.count}}
+            </a>
+          </div>
           <a class="comment-button">
             <ion-icon name="arrow-undo-outline"></ion-icon>
           </a>
+        </div>
+        <div class="is-edited">
+          {% if comment.is_edited %}
+          <span>Изменено</span>
+          {% endif %}
         </div>
       </div>
       {% endfor %}

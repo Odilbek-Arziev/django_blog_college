@@ -26,6 +26,8 @@ class Comment(models.Model):
     is_edited = models.BooleanField(default=False)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField('auth.User', related_name='comment_likes')
+    dislikes = models.ManyToManyField('auth.User', related_name='comment_dislikes')
 
     def __str__(self):
         return self.body
