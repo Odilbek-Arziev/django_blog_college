@@ -3,16 +3,26 @@ from .models import Post, Comment
 from django.http import HttpResponse
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 
 def home(request):
     posts = Post.objects.all()
-    return render(request, "home.html", {"posts": posts})
+    quantity = int(request.GET.get("quantity", 3))
+    posts = posts[:quantity]
+
+    return render(
+        request, "home.html", {"posts": posts, "all_posts": Post.objects.all().count()}
+    )
 
 
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
     form = CommentForm(request.POST or None)
+    comments = Comment.objects.filter(post=post)
+    comments = Paginator(comments, 3)
+    page = request.GET.get("page")
+    comments = comments.get_page(page)
 
     if form.is_valid():
         if request.user.is_anonymous:
@@ -24,7 +34,9 @@ def post_detail(request, pk):
         instance.save()
         return redirect("app:post_detail", pk=post.pk)
 
-    return render(request, "post.html", {"post": post, "form": form})
+    return render(
+        request, "post.html", {"post": post, "form": form, "comments": comments}
+    )
 
 
 @login_required(login_url="users:login")

@@ -70,7 +70,7 @@ main {
 .post:hover {
   transform: scale(1.05);
 }
-.container .title {
+.container-home .title {
   font-weight: bold;
   font-size: 2rem;
 }
@@ -249,70 +249,113 @@ form .title {
   padding: 0 10px;
   border-radius: 5px;
 }
+
 .comments-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-  gap: 20px;
-}
-.comment {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 10px;
+}
+.comment {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 0 5px 1px lightgrey;
-  width: 30vw;
+  padding: 20px;
 }
-.comment-head,
-.comment-author {
-  display: flex;
-  gap: 10px;
-}
-.comment-head .avatar {
+.comment .avatar {
   width: 50px;
 }
-.comment-head img {
+.comment img {
   width: 100%;
 }
+.comment-author {
+  display: flex;
+  gap: 20px;
+}
+.comment-body {
+  display: flex;
+  gap: 40px;
+}
+.is-edited {
+  color: lightgrey;
+  font-size: 10px;
+  display: flex;
+  align-items: end;
+}
 
-.comment-button {
+.comment-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+}
+
+.comment-footer .btn {
   border: 1px solid lightgrey;
   padding: 5px 10px;
   border-radius: 5px;
+  cursor: pointer;
   text-decoration: none;
   color: black;
-  cursor: pointer;
-}
-.comment-footer {
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
-
 .comment-control {
   display: flex;
   gap: 10px;
 }
-.comment-control .btn {
-  width: 30px;
-  height: 30px;
+
+.post-data {
+  display: flex;
+  gap: 20px;
+  padding-top: 30px;
+}
+
+.post-likes,
+.post-dislikes,
+.post-comments {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: grey;
+}
+.pagination-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 0;
+}
+.pagination-buttons .button,
+.show-more .button {
+  border: 1px solid lightgrey;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  color: grey;
+}
+.pagination-buttons .page-number {
+  font-size: 20px;
+  font-weight: bold;
+}
+.previous,
+.next,
+.page-number {
+  width: 20vw;
+  text-align: center;
+}
+
+.container-home {
   display: flex;
   justify-content: center;
-  align-items: center;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  text-decoration: none;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 50px 0;
+}
+
+.show-more .button {
   color: white;
-  cursor: pointer;
 }
-.comment-head {
-  justify-content: space-between;
-}
-.is-edited {
-  color: lightgrey;
-  text-align: right;
-  font-size: 12px;
-  font-style: italic;
+.show-more {
+  padding: 50px 0;
+  text-align: center;
 }

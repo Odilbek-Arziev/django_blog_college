@@ -52,7 +52,7 @@
     </form>
 
     <div class="comments-container">
-      {% for comment in post.comment_set.all %}
+      {% for comment in comments %}
       <div class="comment">
         <div class="comment-head">
           <div class="comment-author">
@@ -62,8 +62,36 @@
                 alt=""
               />
             </div>
-            <div class="author-name">{{ comment.author }}</div>
-            <div class="date">{{ comment.date_added }}</div>
+            <div class="author-data">
+              <div class="author-name">{{ comment.author }}</div>
+              <div class="date">{{ comment.date_added }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-body">
+          <div>{{ comment.body }}</div>
+          <div class="is-edited">
+            {% if comment.is_edited %}
+            <span>Изменено</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="comment-footer">
+          <div class="buttons">
+            <a
+              href="{% url 'app:comment_like' comment.pk %}"
+              class="btn {% if user in comment.likes.all %} primary {% endif %}"
+            >
+              <ion-icon name="thumbs-up-outline"></ion-icon>
+              {{comment.likes.count}}
+            </a>
+            <a
+              href="{% url 'app:comment_dislike' comment.pk %}"
+              class="btn {% if user in comment.dislikes.all %} danger {% endif %}"
+            >
+              <ion-icon name="thumbs-down-outline"></ion-icon>
+              {{comment.likes.count}}
+            </a>
           </div>
           <div class="comment-control">
             {% if user == comment.author or user.is_superuser %}
@@ -80,38 +108,46 @@
               <ion-icon name="trash"></ion-icon>
             </a>
             {% endif %}
-          </div>
-        </div>
-        <div class="comment-body">{{ comment.body }}</div>
-        <div class="comment-footer">
-          <div class="buttons">
-            <a
-              href="{% url 'app:comment_like' comment.pk %}"
-              class="comment-button {% if user in comment.likes.all %} primary {% endif %}"
-            >
-              <ion-icon name="thumbs-up-outline"></ion-icon>
-              {{comment.likes.count}}
-            </a>
-            <a
-              href="{% url 'app:comment_dislike' comment.pk %}"
-              class="comment-button {% if user in comment.dislikes.all %} danger {% endif %}"
-            >
-              <ion-icon name="thumbs-down-outline"></ion-icon>
-              {{comment.likes.count}}
+            <a class="btn">
+              <ion-icon name="arrow-undo"></ion-icon>
             </a>
           </div>
-          <a class="comment-button">
-            <ion-icon name="arrow-undo-outline"></ion-icon>
-          </a>
-        </div>
-        <div class="is-edited">
-          {% if comment.is_edited %}
-          <span>Изменено</span>
-          {% endif %}
         </div>
       </div>
       {% endfor %}
     </div>
   </div>
+  {% if comments.has_other_pages %}
+  <div class="pagination-buttons">
+    <div class="previous">
+      {% if comments.has_previous %}
+      <a href="{%  url 'app:post_detail' post.pk %}?page=1" class="button"
+        >В начало</a
+      >
+      <a
+        href="{% url 'app:post_detail' post.pk %}?page={{comments.previous_page_number}}"
+        class="button"
+        >Назад</a
+      >
+      {% endif %}
+    </div>
+    <div class="page-number">{{comments.number}}</div>
+    <div class="next">
+      {% if comments.has_next %}
+      <a
+        href="{% url 'app:post_detail' post.pk %}?page={{comments.next_page_number}}"
+        class="button"
+        >Далее</a
+      >
+      <a
+        href="{%  url 'app:post_detail' post.pk %}?page={{comments.paginator.num_pages}}"
+        class="button"
+      >
+        В конец
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
