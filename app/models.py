@@ -28,6 +28,12 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField('auth.User', related_name='comment_likes')
     dislikes = models.ManyToManyField('auth.User', related_name='comment_dislikes')
+    parent = models.ForeignKey(
+        'self', null=True, blank=True, on_delete=models.CASCADE, related_name='reply'
+    )
+    first_comment = models.ForeignKey(
+        'self', null=True, blank=True, on_delete=models.CASCADE, related_name='main_comment'
+    )
 
     def __str__(self):
         return self.body

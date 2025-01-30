@@ -6,10 +6,12 @@
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
 }
+
 body {
   height: 100vh;
   background: #f5f5dc;
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -17,17 +19,21 @@ body {
   padding: 10px;
   height: 10vh;
 }
+
 .navbar-menu {
   display: flex;
   gap: 10px;
 }
+
 .navbar-start {
   width: 5%;
   cursor: pointer;
 }
+
 .navbar-start img {
   width: 100%;
 }
+
 .navbar .button {
   padding: 10px 20px;
   border: 1px solid lightgrey;
@@ -37,12 +43,15 @@ body {
   color: black;
   text-decoration: none;
 }
+
 .navbar .button:active {
   box-shadow: 0 0 5px 1px lightgrey;
 }
+
 main {
   height: 90vh;
 }
+
 .container {
   height: 100%;
   display: flex;
@@ -52,6 +61,7 @@ main {
   gap: 20px;
   flex-wrap: wrap;
 }
+
 .post {
   background: white;
   padding: 20px;
@@ -67,13 +77,16 @@ main {
   text-decoration: none;
   color: black;
 }
+
 .post:hover {
   transform: scale(1.05);
 }
+
 .container-home .title {
   font-weight: bold;
   font-size: 2rem;
 }
+
 .author,
 .date {
   color: grey;
@@ -84,21 +97,26 @@ main {
   margin: auto;
   padding-top: 30px;
 }
+
 .post-container .title {
   font-size: 50px;
   font-weight: bold;
 }
+
 .post-container .info {
   color: grey;
   font-style: italic;
 }
+
 .post-container .image {
   width: 100%;
   margin: 20px 0;
 }
+
 .post-container .image img {
   width: 100%;
 }
+
 .post-container .post-body {
   font-size: 20px;
   line-height: 1.5;
@@ -110,6 +128,7 @@ main {
   justify-content: center;
   align-items: center;
 }
+
 form {
   background: white;
   border-radius: 20px;
@@ -120,6 +139,7 @@ form {
   gap: 15px;
   width: 30vw;
 }
+
 .field input[type="text"],
 .field input[type="password"],
 .field textarea {
@@ -129,10 +149,12 @@ form {
   outline: none;
   padding: 0 10px;
 }
+
 .field input[type="text"],
 .field input[type="password"] {
   height: 35px;
 }
+
 .form button {
   height: 35px;
   background: rgb(26, 191, 26);
@@ -141,11 +163,13 @@ form {
   border-radius: 3px;
   cursor: pointer;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .buttons .button {
   border: 1px solid lightgrey;
   padding: 5px 15px;
@@ -158,25 +182,31 @@ form {
   justify-content: center;
   align-items: center;
 }
+
 .buttons {
   display: flex;
   gap: 20px;
   justify-content: center;
 }
+
 .primary {
   background: rgb(26, 191, 26);
   color: white;
 }
+
 .danger {
   background: red !important;
   color: white;
 }
+
 .buttons .button:active {
   box-shadow: 0 0 5px 1px lightgrey;
 }
+
 .danger:hover {
   background: darkred !important;
 }
+
 .primary:hover {
   background: darkgreen;
 }
@@ -190,21 +220,26 @@ form .title {
   align-items: center;
   justify-content: center;
 }
+
 .flex-container .image {
   width: 40vw;
 }
+
 .flex-container .image img {
   width: 100%;
 }
+
 .flex-container .text {
   width: 30vw;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
+
 .flex-container .text .title {
   font-size: 30px;
 }
+
 .flex-container .button {
   background: rgb(26, 191, 26);
   color: white;
@@ -216,11 +251,13 @@ form .title {
   font-size: 20px;
   text-align: center;
 }
+
 .post-buttons {
   display: flex;
   gap: 20px;
   padding: 20px 0;
 }
+
 .post-button {
   border: 1px solid lightgrey;
   padding: 15px;
@@ -232,17 +269,20 @@ form .title {
   align-items: center;
   gap: 5px;
 }
+
 .comment-form {
   box-shadow: none;
   background: none;
   padding: 10px;
   width: 100%;
 }
+
 .comments .title {
   font-size: 25px;
   text-align: center;
   padding: 30px 0;
 }
+
 .comment-form input {
   height: 5vh;
   border: 1px solid lightgrey;
@@ -255,25 +295,31 @@ form .title {
   flex-direction: column;
   gap: 10px;
 }
+
 .comment {
   background: white;
   border-radius: 10px;
   padding: 20px;
 }
+
 .comment .avatar {
   width: 50px;
 }
+
 .comment img {
   width: 100%;
 }
+
 .comment-author {
   display: flex;
   gap: 20px;
 }
+
 .comment-body {
   display: flex;
   gap: 40px;
 }
+
 .is-edited {
   color: lightgrey;
   font-size: 10px;
@@ -300,6 +346,7 @@ form .title {
   align-items: center;
   gap: 5px;
 }
+
 .comment-control {
   display: flex;
   gap: 10px;
@@ -319,11 +366,13 @@ form .title {
   align-items: center;
   color: grey;
 }
+
 .pagination-buttons {
   display: flex;
   justify-content: space-between;
   padding: 50px 0;
 }
+
 .pagination-buttons .button,
 .show-more .button {
   border: 1px solid lightgrey;
@@ -333,10 +382,12 @@ form .title {
   text-decoration: none;
   color: grey;
 }
+
 .pagination-buttons .page-number {
   font-size: 20px;
   font-weight: bold;
 }
+
 .previous,
 .next,
 .page-number {
@@ -355,7 +406,16 @@ form .title {
 .show-more .button {
   color: white;
 }
+
 .show-more {
   padding: 50px 0;
   text-align: center;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.comment hr {
+  margin: 10px 0;
 }

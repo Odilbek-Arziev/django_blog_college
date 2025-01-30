@@ -19,10 +19,14 @@ def home(request):
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
     form = CommentForm(request.POST or None)
-    comments = Comment.objects.filter(post=post)
+    comments = Comment.objects.filter(post=post, first_comment=None)
     comments = Paginator(comments, 3)
     page = request.GET.get("page")
     comments = comments.get_page(page)
+
+    parent_id = request.POST.get('parent_id')
+
+    print(parent_id)
 
     if form.is_valid():
         if request.user.is_anonymous:
@@ -31,6 +35,16 @@ def post_detail(request, pk):
         instance = form.save(commit=False)
         instance.post = post
         instance.author = request.user
+
+        if parent_id:
+            parent = Comment.objects.get(pk=parent_id)
+            instance.parent = parent
+
+            if not parent.first_comment:
+                instance.first_comment = parent
+            else:
+                instance.first_comment = parent.first_comment
+
         instance.save()
         return redirect("app:post_detail", pk=post.pk)
 

@@ -24,17 +24,12 @@
   <div class="post-body">{{ post.body }}</div>
   <hr />
   <div class="post-buttons">
-    <a
-      href="{% url 'app:post_like' post.pk %}"
-      class="post-button {% if user in post.likes.all %} primary {% endif %}"
-    >
+    <a href="{% url 'app:post_like' post.pk %}" class="post-button {% if user in post.likes.all %} primary {% endif %}">
       <ion-icon name="thumbs-up-outline"></ion-icon>
       <span> {{ post.likes.count }}</span>
     </a>
-    <a
-      href="{% url 'app:post_dislike' post.pk %}"
-      class="post-button {% if user in post.dislikes.all %} danger {% endif %}"
-    >
+    <a href="{% url 'app:post_dislike' post.pk %}"
+      class="post-button {% if user in post.dislikes.all %} danger {% endif %}">
       <ion-icon name="thumbs-down-outline"></ion-icon>
       <span> {{ post.dislikes.count }}</span>
     </a>
@@ -57,10 +52,7 @@
         <div class="comment-head">
           <div class="comment-author">
             <div class="avatar">
-              <img
-                src="https://static-00.iconduck.com/assets.00/avatar-default-icon-2048x2048-h6w375ur.png"
-                alt=""
-              />
+              <img src="https://static-00.iconduck.com/assets.00/avatar-default-icon-2048x2048-h6w375ur.png" alt="" />
             </div>
             <div class="author-data">
               <div class="author-name">{{ comment.author }}</div>
@@ -78,40 +70,107 @@
         </div>
         <div class="comment-footer">
           <div class="buttons">
-            <a
-              href="{% url 'app:comment_like' comment.pk %}"
-              class="btn {% if user in comment.likes.all %} primary {% endif %}"
-            >
+            <a href="{% url 'app:comment_like' comment.pk %}"
+              class="btn {% if user in comment.likes.all %} primary {% endif %}">
               <ion-icon name="thumbs-up-outline"></ion-icon>
               {{comment.likes.count}}
             </a>
-            <a
-              href="{% url 'app:comment_dislike' comment.pk %}"
-              class="btn {% if user in comment.dislikes.all %} danger {% endif %}"
-            >
+            <a href="{% url 'app:comment_dislike' comment.pk %}"
+              class="btn {% if user in comment.dislikes.all %} danger {% endif %}">
               <ion-icon name="thumbs-down-outline"></ion-icon>
               {{comment.likes.count}}
             </a>
           </div>
           <div class="comment-control">
             {% if user == comment.author or user.is_superuser %}
-            <a
-              class="btn primary"
-              href="{% url 'app:comment_edit' comment.pk %}"
-            >
+            <a class="btn primary" href="{% url 'app:comment_edit' comment.pk %}">
               <ion-icon name="create"></ion-icon>
             </a>
-            <a
-              class="btn danger"
-              href="{% url 'app:comment_delete' comment.pk %}"
-            >
+            <a class="btn danger" href="{% url 'app:comment_delete' comment.pk %}">
               <ion-icon name="trash"></ion-icon>
             </a>
             {% endif %}
-            <a class="btn">
+            <button class="btn" onclick="toggleReplyForm('comment-{{comment.pk}}')">
               <ion-icon name="arrow-undo"></ion-icon>
-            </a>
+            </button>
           </div>
+        </div>
+        <div class="is-hidden" id="comment-{{comment.pk}}">
+          <form method="post" class="comment-form">
+            {% csrf_token %}
+            <input type="hidden" value="{{comment.pk}}" name="parent_id">
+            {% for field in form %}
+            {{field}}
+            {% endfor %}
+          </form>
+
+          <hr>
+
+          {% for reply in comment.main_comment.all %}
+          <div class="reply">
+            <div class="comment-head">
+              <div class="comment-author">
+                <div class="avatar">
+                  <img src="https://static-00.iconduck.com/assets.00/avatar-default-icon-2048x2048-h6w375ur.png"
+                    alt="" />
+                </div>
+                <div class="author-data">
+                  <div class="author-name">{{ reply.author }}</div>
+                  <div class="date">{{ reply.date_added }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="comment-body">
+              <div>
+                <strong>{{reply.parent.author}},</strong>
+                <span>{{ reply.body }}</span>
+              </div>
+              <div class="is-edited">
+                {% if reply.is_edited %}
+                <span>Изменено</span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="comment-footer">
+              <div class="buttons">
+                <a href="{% url 'app:comment_like' reply.pk %}"
+                  class="btn {% if user in reply.likes.all %} primary {% endif %}">
+                  <ion-icon name="thumbs-up-outline"></ion-icon>
+                  {{reply.likes.count}}
+                </a>
+                <a href="{% url 'app:comment_dislike' reply.pk %}"
+                  class="btn {% if user in reply.dislikes.all %} danger {% endif %}">
+                  <ion-icon name="thumbs-down-outline"></ion-icon>
+                  {{reply.likes.count}}
+                </a>
+              </div>
+              <div class="comment-control">
+                {% if user == reply.author or user.is_superuser %}
+                <a class="btn primary" href="{% url 'app:comment_edit' reply.pk %}">
+                  <ion-icon name="create"></ion-icon>
+                </a>
+                <a class="btn danger" href="{% url 'app:comment_delete' reply.pk %}">
+                  <ion-icon name="trash"></ion-icon>
+                </a>
+                {% endif %}
+                <button class="btn" onclick="toggleReplyForm('comment-{{reply.pk}}')">
+                  <ion-icon name="arrow-undo"></ion-icon>
+                </button>
+              </div>
+            </div>
+            
+            <div class="is-hidden" id="comment-{{reply.pk}}">
+              <form method="post" class="comment-form">
+                {% csrf_token %}
+                <input type="hidden" value="{{reply.pk}}" name="parent_id">
+                {% for field in form %}
+                {{field}}
+                {% endfor %}
+              </form>
+            </div>
+          </div>
+          <hr>
+          {% endfor %}
         </div>
       </div>
       {% endfor %}
@@ -121,28 +180,15 @@
   <div class="pagination-buttons">
     <div class="previous">
       {% if comments.has_previous %}
-      <a href="{%  url 'app:post_detail' post.pk %}?page=1" class="button"
-        >В начало</a
-      >
-      <a
-        href="{% url 'app:post_detail' post.pk %}?page={{comments.previous_page_number}}"
-        class="button"
-        >Назад</a
-      >
+      <a href="{%  url 'app:post_detail' post.pk %}?page=1" class="button">В начало</a>
+      <a href="{% url 'app:post_detail' post.pk %}?page={{comments.previous_page_number}}" class="button">Назад</a>
       {% endif %}
     </div>
     <div class="page-number">{{comments.number}}</div>
     <div class="next">
       {% if comments.has_next %}
-      <a
-        href="{% url 'app:post_detail' post.pk %}?page={{comments.next_page_number}}"
-        class="button"
-        >Далее</a
-      >
-      <a
-        href="{%  url 'app:post_detail' post.pk %}?page={{comments.paginator.num_pages}}"
-        class="button"
-      >
+      <a href="{% url 'app:post_detail' post.pk %}?page={{comments.next_page_number}}" class="button">Далее</a>
+      <a href="{%  url 'app:post_detail' post.pk %}?page={{comments.paginator.num_pages}}" class="button">
         В конец
       </a>
       {% endif %}
